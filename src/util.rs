@@ -19,31 +19,32 @@ lazy_static! {
     // ];
 }
 
-// pub fn parseAbbreviatedNumber(str_: &str) -> () {
-//     let match_ = str_
-//       .replace(",", ".")
-//       .replace(" ", "");
-//     //   /([\d,.]+)([MK]?)/
-//     //   .match();
-//     let is_match = Regex::new(r"^([\d,.]+)([MK]?)$").unwrap().is_match(text);
-//     if is_match {
-//     //   let [, num, multi] = match_;
-//     let num = 10;
-//     let multi = 'M';
-//       num = parseFloat(num);
-//       if multi == 'M' {
-//         return num * 1000000;
-//       } else {
-//         if multi == 'K' {
-//             return num * 1000;
-//         } else {
-//             return num;
-//         }
-//         return num 
-//       }
-//     }
-//     ()
-// }
+pub fn parseAbbreviatedNumber(str_: &str) -> Option<i32> {
+    let match_ = str_
+      .replace(",", ".")
+      .replace(" ", "");
+    //   /([\d,.]+)([MK]?)/
+    //   .match();
+    let is_match = Regex::new(r"^([\d,.]+)([MK]?)$").unwrap().is_match(&match_);
+    if is_match {
+    //   let [, num, multi] = match_;
+    let num = 10;
+    let multi = 'M';
+    //   num = parseFloat(num);
+        let num = match_.parse::<i32>().unwrap();
+      if multi == 'M' {
+        return Some(num * 1000000);
+      } else {
+        if multi == 'K' {
+            return Some(num * 1000);
+        } else {
+            return Some(num);
+        }
+        // return Some(num); 
+      }
+    }
+    return None;
+}
 
 fn format_radix(mut x: u32, radix: u32) -> String {
     let mut result = vec![];
